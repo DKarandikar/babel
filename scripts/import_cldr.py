@@ -212,6 +212,7 @@ def parse_global(srcdir, sup):
     zone_aliases = global_data.setdefault('zone_aliases', {})
     zone_territories = global_data.setdefault('zone_territories', {})
     win_mapping = global_data.setdefault('windows_zone_mapping', {})
+    full_win_mapping = global_data.setdefault('full_windows_zone_mapping', {})
     language_aliases = global_data.setdefault('language_aliases', {})
     territory_aliases = global_data.setdefault('territory_aliases', {})
     script_aliases = global_data.setdefault('script_aliases', {})
@@ -236,6 +237,7 @@ def parse_global(srcdir, sup):
             win_mapping[map_zone.attrib['other']] = map_zone.attrib['type'].split()[0]
         for tzid in text_type(map_zone.attrib['type']).split():
             _zone_territory_map[tzid] = text_type(map_zone.attrib['territory'])
+            full_win_mapping[(tzid, text_type(map_zone.attrib['territory']))] = text_type(map_zone.attrib['other'])
     for key_elem in bcp47_timezone.findall('.//keyword/key'):
         if key_elem.attrib['name'] == 'tz':
             for elem in key_elem.findall('type'):
